@@ -1,0 +1,31 @@
+#!/bin/bash -l
+#PBS -N ollama01
+#PBS -l select=1:ncpus=2:mem=16GB:ngpus=1:gputype=A100
+#PBS -l walltime=1:00:00
+#PBS -m abe
+#PBS -o ~/output.log
+#PBS -e ~/error.log
+
+cd $PBS_O_WORKDIR
+
+# Choose a random port to run ollama on
+let "OLLAMA_RND_PORT = 11434 + ${RANDOM:0:3}"
+
+echo "Port for OLLAMA ${OLLAMA_RND_PORT}"
+
+export OLLAMA_HOST=127.0.0.1:${OLLAMA_RND_PORT}
+
+# Start ollama server
+nohup ~/bin/ollama serve &
+
+# Ściągniecie modelu
+~/bin/ollama pull phi3:mini
+
+# Activate Conda Environment
+~/miniconda3/condabin/conda activate ny_env
+
+#Launch R Script #1
+~/run_1st.sh
+
+# Kill the ollama server
+pkill -9 ollama

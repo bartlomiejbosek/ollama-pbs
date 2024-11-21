@@ -1,16 +1,16 @@
-#!/bin/bash
-#PBS -N touch_test          # Nazwa zadania
-#PBS -l nodes=1:ppn=1       # Wymagania: 1 węzeł, 1 procesor
-#PBS -l walltime=00:01:00   # Maksymalny czas wykonania: 1 minuta
-#PBS -q batch               # Kolejka batch
-#PBS -o ~/output.log        # Plik do zapisania standardowego wyjścia
-#PBS -e ~/error.log         # Plik do zapisania błędów
+#!/bin/bash -l
+#PBS -N touch_test
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=00:01:00
+#PBS -m abe
+#PBS -o ~/output.log
+#PBS -e ~/error.log
 
-# Przejdź do katalogu domowego użytkownika
+# Komentarz: przejdź do katalogu domowego użytkownika
 cd ~
 
-# Wykonaj polecenie tworzenia pliku
+# Komentarz: utwórz plik hello.txt
 touch hello.txt
 
-# Wyświetl komunikat informujący, że zadanie zostało wykonane
+# Komentarz: wyświetl komunikat potwierdzający
 echo "Plik hello.txt został utworzony."
